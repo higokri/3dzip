@@ -70,10 +70,9 @@ For the full environment setup, refer to the
 
 The evaluation benchmarks (ScanQA, SQA3D) are 3D question-answering tasks based on ScanNet scenes. Scene data should
 be placed under `playground/data/LLaVA-3D-Pretrain/scannet/`, with each scene folder containing `color/`, `depth/`,
-`pose/`, and `intrinsic/` subdirectories. The question/answer **label files are not included** in this repository —
-obtain them from [SQA3D](https://github.com/SilongYong/SQA3D) and [ScanQA](https://github.com/ATR-DBI/ScanQA) and place
-them under `playground/data/annotations/` (see
-[`playground/data/annotations/README.md`](playground/data/annotations/README.md) for the expected filenames).
+`pose/`, and `intrinsic/` subdirectories. Evaluation annotations should be placed under
+`playground/data/annotations/`, derived from
+[SQA3D](https://github.com/SilongYong/SQA3D) and [ScanQA](https://github.com/ATR-DBI/ScanQA).
 
 ## Usage
 
