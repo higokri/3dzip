@@ -12,7 +12,7 @@
   <meta property="og:title" content="3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering">
   <meta property="og:description" content="A three-stage geometry-aware token compression framework for 3D VLMs. ECCV 2026.">
   <meta property="og:type" content="website">
-  <meta property="og:image" content="static/images/teaser.png">
+  <meta property="og:image" content="static/images/pipeline.png">
 
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -72,64 +72,32 @@
 
         <div class="is-size-4 conference" style="margin-top: 1rem;">ECCV 2026</div>
 
-        <!-- Links -->
+        <!-- Links (coming soon — disabled) -->
         <div class="column has-text-centered">
           <div class="link-block" style="margin-top: 1rem;">
-            <a href="#" class="button is-dark is-rounded">
-              <span class="icon"><i class="fas fa-file-pdf"></i></span>
-              <span>Paper</span>
-            </a>
-            <a href="#" class="button is-dark is-rounded">
+            <a class="button is-dark is-rounded" disabled title="Coming soon">
               <span class="icon"><i class="ai ai-arxiv"></i></span>
               <span>arXiv</span>
             </a>
-            <a href="https://github.com/" class="button is-dark is-rounded">
+            <a class="button is-dark is-rounded" disabled title="Coming soon">
               <span class="icon"><i class="fab fa-github"></i></span>
               <span>Code</span>
             </a>
           </div>
+          <p class="is-size-7" style="color:#888; margin-top:0.4rem;">arXiv &amp; code coming soon</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== TEASER ===================== -->
+  <!-- ===================== TEASER VIDEO ===================== -->
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="teaser-wrap has-text-centered section-figure">
-        <img src="static/images/teaser.png" alt="3DZip teaser">
-        <p class="figure-caption">
-          <b>(a)</b> Per-object token allocation under different selection strategies. Feature-DPP distributes
-          tokens more evenly across objects (70% coverage) than spatial sampling (51%).
-          <b>(b)</b> 3DZip compresses dense 3D tokens to only <b>128</b> while retaining <b>94.7%</b> accuracy and
-          achieving <b>1.92&times;</b> faster inference.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ===================== HIGHLIGHTS ===================== -->
-  <section class="section" style="padding-top: 1.5rem;">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered highlights has-text-centered">
-        <div class="column">
-          <div class="box">
-            <div class="num">128</div>
-            <p>compressed tokens per scene</p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <div class="num">94.7%</div>
-            <p>of original performance retained</p>
-          </div>
-        </div>
-        <div class="column">
-          <div class="box">
-            <div class="num">1.92&times;</div>
-            <p>faster inference</p>
-          </div>
-        </div>
+        <video autoplay muted loop playsinline style="width:100%; border-radius:6px;">
+          <source src="static/videos/teaser.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
       </div>
     </div>
   </section>
