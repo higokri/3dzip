@@ -1,18 +1,14 @@
 # 3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering
 
-Official code and project page for **3DZip** (ECCV 2026).
-
 **[Changwoo Baek](https://sites.google.com/view/changwoobaek00/%ED%99%88), [Kyeongbo Kong](https://www.pnu-cvsp.com/prof)†** — Pusan National University
 
 🌐 **Project page:** https://higokri.github.io/3dzip/ &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
 
-## Demo
+## ✨ Highlight
 
 <p align="center">
   <img src="static/images/teaser.gif" width="100%" alt="3DZip teaser">
 </p>
-
-> Watch the full-quality teaser on the [project page](https://higokri.github.io/3dzip/).
 
 ---
 
@@ -27,7 +23,7 @@ It removes the redundancy introduced by multi-view aggregation while preserving 
 > tokens by **feature-space diversity** via a Determinantal Point Process (DPP), and finally **merges** the remaining
 > tokens under spatial constraints to preserve geometric structure.
 
-## 3DZip algorithm
+## 🧠 3DZip algorithm
 
 The core algorithm is implemented in
 [`llava/model/multimodal_encoder/video_encoder.py`](llava/model/multimodal_encoder/video_encoder.py) — see the
@@ -42,7 +38,7 @@ The core algorithm is implemented in
 This code is built on top of [LLaVA-3D](https://github.com/ZCMax/LLaVA-3D). Please refer to the original repository
 for full documentation, training scripts, and model details.
 
-## Setup
+## 🛠️ Setup
 
 ### Prerequisites
 
@@ -74,7 +70,7 @@ be placed under `playground/data/LLaVA-3D-Pretrain/scannet/`, with each scene fo
 `playground/data/annotations/`, derived from
 [SQA3D](https://github.com/SilongYong/SQA3D) and [ScanQA](https://github.com/ATR-DBI/ScanQA).
 
-## Usage
+## 🚀 Usage
 
 ### Environment variables
 
@@ -106,7 +102,7 @@ bash scripts/eval/eval_sqa3d.sh   <pooling> <voxel_size> <target_tokens>   # SQA
 bash scripts/eval/eval_scanqa.sh  <pooling> <voxel_size> <target_tokens>   # ScanQA
 ```
 
-## Repository structure
+## 📁 Repository structure
 
 ```
 .
@@ -119,7 +115,7 @@ bash scripts/eval/eval_scanqa.sh  <pooling> <voxel_size> <target_tokens>   # Sca
 └── pyproject.toml
 ```
 
-## Citation
+## 📖 Citation
 
 ```bibtex
 @inproceedings{baek2026threedzip,
@@ -130,12 +126,12 @@ bash scripts/eval/eval_scanqa.sh  <pooling> <voxel_size> <target_tokens>   # Sca
 }
 ```
 
-## Acknowledgements
+## 🙏 Acknowledgements
 
 This code is built upon [LLaVA-3D](https://github.com/ZCMax/LLaVA-3D); we thank the authors for their excellent work.
 The project page uses the [Academic Project Page Template](https://github.com/eliahuhorwitz/Academic-project-page-template),
 adapted from [Nerfies](https://nerfies.github.io).
 
-## License
+## 📄 License
 
 This project follows the license of [LLaVA-3D](https://github.com/ZCMax/LLaVA-3D).
