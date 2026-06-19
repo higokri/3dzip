@@ -272,14 +272,14 @@
   </footer>
 
   <script>
-    // Start the teaser video after a 3-second delay.
+    // Start the teaser video after a 1-second delay.
     window.addEventListener('load', function () {
       var v = document.getElementById('teaser-video');
       if (v) {
         setTimeout(function () {
           var p = v.play();
           if (p && p.catch) { p.catch(function () {}); }
-        }, 3000);
+        }, 1000);
       }
     });
   </script>
