@@ -90,7 +90,7 @@
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="teaser-wrap has-text-centered section-figure">
-        <video id="teaser-video" muted loop playsinline style="width:100%; border-radius:6px;">
+        <video id="teaser-video" muted playsinline style="width:100%; border-radius:6px;">
           <source src="static/videos/teaser.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -272,15 +272,18 @@
   </footer>
 
   <script>
-    // Start the teaser video after a 1-second delay.
+    // Start the teaser video after a 1-second delay, then loop with a 3-second pause between plays.
     window.addEventListener('load', function () {
       var v = document.getElementById('teaser-video');
-      if (v) {
-        setTimeout(function () {
-          var p = v.play();
-          if (p && p.catch) { p.catch(function () {}); }
-        }, 1000);
+      if (!v) return;
+      function play() {
+        var p = v.play();
+        if (p && p.catch) { p.catch(function () {}); }
       }
+      v.addEventListener('ended', function () {
+        setTimeout(function () { v.currentTime = 0; play(); }, 3000);
+      });
+      setTimeout(play, 1000);
     });
   </script>
 
