@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering</title>
+  <meta name="description"
+    content="3DZip is a three-stage, geometry-aware token compression framework for projection-based 3D vision-language models. It retains 94.7% of the original performance with only 128 tokens and 1.92x faster inference.">
+  <meta name="keywords" content="3D Vision-Language Models, 3D Question Answering, Token Compression, ECCV 2026">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering">
+  <meta property="og:description" content="A three-stage geometry-aware token compression framework for 3D VLMs. ECCV 2026.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="static/images/teaser.png">
+
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet"
+    href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <style>
+    :root { --accent: #1f6feb; }
+    body { font-family: 'Noto Sans', sans-serif; }
+    .hero-title { font-family: 'Google Sans', 'Noto Sans', sans-serif; font-weight: 700; }
+    .author-block { display: inline-block; margin: 0 0.6rem; }
+    .author-block a { color: var(--accent); }
+    .conference { color: #d33682; font-weight: 700; letter-spacing: 0.02em; }
+    .link-block .button { margin: 0.25rem; }
+    .section-figure img { border-radius: 6px; }
+    .figure-caption { color: #555; font-size: 0.95rem; margin-top: 0.6rem; }
+    .highlight-num { color: var(--accent); font-weight: 700; }
+    .highlights .box { height: 100%; }
+    .highlights .num { font-family: 'Google Sans', sans-serif; font-size: 2.1rem; font-weight: 700; color: var(--accent); }
+    pre.bibtex { background: #f5f5f5; border-radius: 6px; padding: 1.25rem; overflow-x: auto; }
+    .teaser-wrap { max-width: 1000px; margin: 0 auto; }
+  </style>
+</head>
+
+<body>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop has-text-centered">
+        <h1 class="title is-2 hero-title publication-title">
+          3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering
+        </h1>
+
+        <div class="is-size-5 publication-authors" style="margin-top: 1rem;">
+          <span class="author-block">
+            <a href="https://orcid.org/0009-0008-2616-8238" target="_blank">Changwoo Baek</a>
+          </span>
+          <span class="author-block">
+            <a href="https://orcid.org/0000-0002-1135-7502" target="_blank">Kyeongbo Kong</a><sup>&#9993;</sup>
+          </span>
+        </div>
+
+        <div class="is-size-6 publication-authors" style="margin-top: 0.6rem;">
+          <span class="author-block">
+            Department of Electrical and Electronics Engineering, Pusan National University, Busan, South Korea
+          </span>
+          <br>
+          <span class="is-size-7">{higok18, kbkong}@pusan.ac.kr &nbsp;&middot;&nbsp; <sup>&#9993;</sup> Corresponding author</span>
+        </div>
+
+        <div class="is-size-4 conference" style="margin-top: 1rem;">ECCV 2026</div>
+
+        <!-- Links -->
+        <div class="column has-text-centered">
+          <div class="link-block" style="margin-top: 1rem;">
+            <a href="#" class="button is-dark is-rounded">
+              <span class="icon"><i class="fas fa-file-pdf"></i></span>
+              <span>Paper</span>
+            </a>
+            <a href="#" class="button is-dark is-rounded">
+              <span class="icon"><i class="ai ai-arxiv"></i></span>
+              <span>arXiv</span>
+            </a>
+            <a href="https://github.com/" class="button is-dark is-rounded">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== TEASER ===================== -->
+  <section class="hero teaser">
+    <div class="container is-max-desktop">
+      <div class="teaser-wrap has-text-centered section-figure">
+        <img src="static/images/teaser.png" alt="3DZip teaser">
+        <p class="figure-caption">
+          <b>(a)</b> Per-object token allocation under different selection strategies. Feature-DPP distributes
+          tokens more evenly across objects (70% coverage) than spatial sampling (51%).
+          <b>(b)</b> 3DZip compresses dense 3D tokens to only <b>128</b> while retaining <b>94.7%</b> accuracy and
+          achieving <b>1.92&times;</b> faster inference.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== HIGHLIGHTS ===================== -->
+  <section class="section" style="padding-top: 1.5rem;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered highlights has-text-centered">
+        <div class="column">
+          <div class="box">
+            <div class="num">128</div>
+            <p>compressed tokens per scene</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="box">
+            <div class="num">94.7%</div>
+            <p>of original performance retained</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="box">
+            <div class="num">1.92&times;</div>
+            <p>faster inference</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABSTRACT ===================== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Recent 3D vision-language models (3D VLMs) construct geometry-aware tokens by projecting 2D visual
+              features into world coordinates, enabling spatial reasoning for tasks such as 3D question answering.
+              However, this design generates thousands of tokens per scene, resulting in substantial computational
+              and memory overhead. While token compression has been extensively studied in 2D VLMs, existing
+              approaches rely on semantic relevance or attention-based selection that overlook the structured spatial
+              nature of 3D tokens. Moreover, redundancy in 3D representations cannot be resolved by spatial proximity
+              alone, as object-level token imbalance persists even after spatial aggregation. To address this, we
+              propose <b>3DZip</b>, a three-stage token compression framework that first applies coarse voxelization
+              to remove point-level redundancy, then selects anchor tokens based on feature-space diversity via a
+              Determinantal Point Process, and finally merges remaining tokens under spatial constraints to preserve
+              geometric coherence. Experiments on three 3D question answering benchmarks demonstrate that 3DZip
+              consistently outperforms existing compression methods, retaining 94.7% of the original performance with
+              only 128 tokens, achieving a 1.92&times; faster inference speed.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== METHOD: PIPELINE ===================== -->
+  <section class="section" style="background-color: #fafafa;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Method</h2>
+          <div class="section-figure">
+            <img src="static/images/pipeline.png" alt="3DZip three-stage pipeline">
+            <p class="figure-caption has-text-justified">
+              <b>Overview of the proposed three-stage token compression pipeline.</b> Given geometry-aware 3D tokens
+              &#119985;, we first apply coarse <b>voxelization</b> to obtain a spatially reduced set, then perform
+              <b>diversity-aware anchor selection</b> via a Determinantal Point Process to identify semantically
+              representative anchors, and finally <b>spatially-constrained token merging</b> aggregates nearby
+              non-anchor tokens into anchors to produce the compressed set.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="content has-text-justified" style="margin-top: 2rem;">
+        <p>
+          Projection-based multi-view aggregation introduces two distinct forms of redundancy. <b>Point-level
+          redundancy</b> arises when identical physical surfaces are observed across multiple viewpoints, producing
+          overlapping tokens at nearly identical locations. <b>Object-level redundancy</b> occurs when a single object
+          is represented by tokens from multiple surface regions, which spatial aggregation alone cannot collapse.
+          3DZip explicitly decomposes redundancy into point-level density, object-level duplication, and geometric
+          consistency, and addresses each with a dedicated stage.
+        </p>
+      </div>
+
+      <div class="section-figure" style="margin-top: 1.5rem;">
+        <img src="static/images/construction.png" alt="Geometry-aware 3D token construction">
+        <p class="figure-caption has-text-justified">
+          <b>Geometry-aware 3D token construction.</b> Multi-view RGB-D inputs are projected into world coordinates
+          to form geometry-aware 3D tokens via 3D positional embedding. The large token cardinality
+          <i>N = M &times; N<sub>2D</sub></i> motivates an efficient token compression strategy.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ANALYSIS ===================== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Why feature diversity matters</h2>
+          <div class="section-figure">
+            <img src="static/images/coverage.png" alt="Object-level token allocation across selection strategies">
+            <p class="figure-caption has-text-justified">
+              <b>Object-level token allocation across selection strategies on the full SQA3D test scenes.</b>
+              Per-object token counts for 1,729 foreground object instances across 67 ScanNet scenes. The voxel-only
+              distribution exhibits a pronounced long-tail pattern; spatial sampling (XYZ-DPP) still concentrates on a
+              limited subset of objects (47% coverage), whereas <b>Feature-DPP</b> distributes tokens more evenly,
+              improving object coverage to 64%.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== QUALITATIVE ===================== -->
+  <section class="section" style="background-color: #fafafa;">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Qualitative Results</h2>
+          <div class="section-figure">
+            <img src="static/images/qualitative.png" alt="Qualitative comparison of retained 3D tokens">
+            <p class="figure-caption has-text-justified">
+              <b>Qualitative comparison of retained 3D tokens on OpenEQA.</b> VisPruner tends to allocate many tokens
+              to floor regions, while DTC may miss key objects. In contrast, 3DZip retains tokens on multiple
+              semantically important objects and further enriches them through spatially-constrained merging.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== BIBTEX ===================== -->
+  <section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+      <h2 class="title is-3">BibTeX</h2>
+      <pre class="bibtex">@inproceedings{baek2026threedzip,
+  title     = {3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering},
+  author    = {Baek, Changwoo and Kong, Kyeongbo},
+  booktitle = {Proceedings of the European Conference on Computer Vision (ECCV)},
+  year      = {2026}
+}</pre>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8 has-text-centered content">
+          <p>
+            This website is licensed under a
+            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons
+              Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This page was built using the
+            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project
+              Page Template</a>, which is adapted from the
+            <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
