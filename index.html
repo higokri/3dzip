@@ -130,6 +130,25 @@
     </div>
   </section>
 
+  <!-- ===================== PRELIMINARY ===================== -->
+  <section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-full">
+          <h2 class="title is-3">Preliminary: Projection-based 3D VLMs</h2>
+          <div class="section-figure">
+            <img src="static/images/construction.png" alt="Geometry-aware 3D token construction">
+            <p class="figure-caption has-text-justified">
+              <b>Geometry-aware 3D token construction.</b> Multi-view RGB-D inputs are projected into world coordinates
+              to form geometry-aware 3D tokens via 3D positional embedding. The large token cardinality
+              <i>N = M &times; N<sub>2D</sub></i> motivates an efficient token compression strategy.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===================== METHOD: PIPELINE ===================== -->
   <section class="section" style="background-color: #fafafa;">
     <div class="container is-max-desktop">
@@ -157,15 +176,6 @@
           is represented by tokens from multiple surface regions, which spatial aggregation alone cannot collapse.
           3DZip explicitly decomposes redundancy into point-level density, object-level duplication, and geometric
           consistency, and addresses each with a dedicated stage.
-        </p>
-      </div>
-
-      <div class="section-figure" style="margin-top: 1.5rem;">
-        <img src="static/images/construction.png" alt="Geometry-aware 3D token construction">
-        <p class="figure-caption has-text-justified">
-          <b>Geometry-aware 3D token construction.</b> Multi-view RGB-D inputs are projected into world coordinates
-          to form geometry-aware 3D tokens via 3D positional embedding. The large token cardinality
-          <i>N = M &times; N<sub>2D</sub></i> motivates an efficient token compression strategy.
         </p>
       </div>
     </div>
