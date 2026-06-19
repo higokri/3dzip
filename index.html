@@ -90,7 +90,7 @@
   <section class="hero teaser">
     <div class="container is-max-desktop">
       <div class="teaser-wrap has-text-centered section-figure">
-        <video autoplay muted loop playsinline style="width:100%; border-radius:6px;">
+        <video id="teaser-video" muted loop playsinline style="width:100%; border-radius:6px;">
           <source src="static/videos/teaser.mp4" type="video/mp4">
           Your browser does not support the video tag.
         </video>
@@ -270,6 +270,19 @@
       </div>
     </div>
   </footer>
+
+  <script>
+    // Start the teaser video after a 3-second delay.
+    window.addEventListener('load', function () {
+      var v = document.getElementById('teaser-video');
+      if (v) {
+        setTimeout(function () {
+          var p = v.play();
+          if (p && p.catch) { p.catch(function () {}); }
+        }, 3000);
+      }
+    });
+  </script>
 
 </body>
 </html>
