@@ -6,9 +6,7 @@
 
 ## ✨ Highlight
 
-<p align="center">
-  <img src="static/images/teaser.gif" width="100%" alt="3DZip teaser">
-</p>
+https://github.com/user-attachments/assets/5776e4df-a16b-47c9-ad09-e0f909ecd2c8
 
 ---
 
