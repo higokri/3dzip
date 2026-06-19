@@ -2,3 +2,4 @@
 *.zip
 *.pdf
 extracted/
+annotations/*.json
