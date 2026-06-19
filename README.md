@@ -1,8 +1,8 @@
 # [ECCV 2026] 3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering
 
-**[Changwoo Baek](https://sites.google.com/view/changwoobaek00/%ED%99%88), [Kyeongbo Kong](https://www.pnu-cvsp.com/prof)†** — Pusan National University
+**[Changwoo Baek](https://sites.google.com/view/changwoobaek00/%ED%99%88), [Kyeongbo Kong](https://www.pnu-cvsp.com/prof)†** 
 
-🌐 **Project page:** https://higokri.github.io/3dzip/ &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
+🌐 **Project page(https://higokri.github.io/3dzip/) &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
 
 ## ✨ Highlight
 
