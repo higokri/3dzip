@@ -139,10 +139,10 @@
     /* contributions */
     .contribs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
     .contrib { background:#fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
-    .contrib .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff;
-      background: var(--grad); font-size: 1.1rem; margin-bottom: 14px; }
-    .contrib h3 { margin: 0 0 6px; font-size: 1.06rem; }
-    .contrib p { margin: 0; color: var(--ink-soft); font-size: 0.94rem; }
+    .contrib .ic { width: 54px; height: 54px; border-radius: 14px; display: grid; place-items: center; color: #fff;
+      background: var(--grad); font-size: 1.5rem; margin-bottom: 16px; }
+    .contrib h3 { margin: 0 0 9px; font-size: 1.55rem; }
+    .contrib p { margin: 0; color: var(--ink-soft); font-size: 1.22rem; line-height: 1.55; }
     @media (max-width: 820px){ .contribs { grid-template-columns: 1fr; } }
 
     /* 2D -> 3D transition band */
@@ -209,6 +209,15 @@
     #lb { position: fixed; inset: 0; background: rgba(12,12,20,0.86); display: none; place-items: center; z-index: 100; padding: 30px; cursor: zoom-out; }
     #lb.open { display: grid; }
     #lb img { max-width: 95vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+
+    /* cursor follower */
+    .cur-dot, .cur-ring { position: fixed; top: 0; left: 0; border-radius: 50%; pointer-events: none;
+      z-index: 9999; transform: translate(-50%, -50%); }
+    .cur-dot { width: 7px; height: 7px; background: var(--a2); }
+    .cur-ring { width: 34px; height: 34px; border: 2px solid rgba(124,58,237,0.5);
+      transition: width .2s ease, height .2s ease, border-color .2s ease, background .2s ease; }
+    .cur-ring.hot { width: 52px; height: 52px; border-color: rgba(124,58,237,0.85); background: rgba(124,58,237,0.08); }
+    @media (hover: none), (pointer: coarse) { .cur-dot, .cur-ring { display: none; } }
 
     /* footer */
     footer { padding: 44px 0; border-top: 1px solid var(--line); color: var(--ink-soft); text-align: center; font-size: 0.9rem; }
@@ -568,6 +577,8 @@
   </footer>
 
   <div id="lb"><img alt=""></div>
+  <div class="cur-ring" id="cur-ring"></div>
+  <div class="cur-dot" id="cur-dot"></div>
 
   <script>
     // scroll progress bar
@@ -621,6 +632,27 @@
     });
     lb.addEventListener('click', () => lb.classList.remove('open'));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+
+    // cursor follower: dot tracks exactly, ring trails with easing
+    (function () {
+      const dot = document.getElementById('cur-dot');
+      const ring = document.getElementById('cur-ring');
+      if (!dot || !ring || window.matchMedia('(pointer: coarse)').matches) return;
+      let mx = innerWidth / 2, my = innerHeight / 2, rx = mx, ry = my, shown = false;
+      addEventListener('mousemove', (e) => {
+        mx = e.clientX; my = e.clientY;
+        dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
+        if (!shown) { shown = true; dot.style.opacity = ring.style.opacity = 1; }
+      });
+      const interactive = 'a, button, .frame, .stat, .contrib, .tbl-card, .btn, video';
+      addEventListener('mouseover', (e) => { if (e.target.closest(interactive)) ring.classList.add('hot'); });
+      addEventListener('mouseout', (e) => { if (e.target.closest(interactive)) ring.classList.remove('hot'); });
+      (function loop() {
+        rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18;
+        ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+        requestAnimationFrame(loop);
+      })();
+    })();
   </script>
 </body>
 </html>
