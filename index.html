@@ -5,274 +5,514 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering</title>
   <meta name="description"
-    content="3DZip is a three-stage, geometry-aware token compression framework for projection-based 3D vision-language models. It retains 94.7% of the original performance with only 128 tokens and 1.92x faster inference.">
+    content="3DZip is a training-free, three-stage geometry-aware token compression framework for projection-based 3D vision-language models. It retains 94.7% of the original performance with only 128 tokens and 1.92x faster inference.">
   <meta name="keywords" content="3D Vision-Language Models, 3D Question Answering, Token Compression, ECCV 2026">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering">
-  <meta property="og:description" content="A three-stage geometry-aware token compression framework for 3D VLMs. ECCV 2026.">
+  <meta property="og:title" content="3DZip (ECCV 2026)">
+  <meta property="og:description" content="A training-free three-stage geometry-aware token compression framework for 3D VLMs.">
   <meta property="og:type" content="website">
   <meta property="og:image" content="static/images/pipeline.png">
 
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
-  <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet"
-    href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
-    rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
   <style>
-    :root { --accent: #1f6feb; }
-    body { font-family: 'Noto Sans', sans-serif; }
-    .hero-title { font-family: 'Google Sans', 'Noto Sans', sans-serif; }
-    .author-block { display: inline-block; margin: 0 0.6rem; }
-    .author-block a { color: var(--accent); }
-    .conference { color: #d33682; font-weight: 700; letter-spacing: 0.02em; }
-    .link-block .button { margin: 0.25rem; }
-    .link-block .button[disabled] { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
-    .section-figure img { border-radius: 6px; }
-    .figure-caption { color: #555; font-size: 0.95rem; margin-top: 0.6rem; }
-    pre.bibtex { background: #f5f5f5; border-radius: 6px; padding: 1.25rem; overflow-x: auto; }
-    .teaser-wrap { max-width: 1000px; margin: 0 auto; }
+    :root {
+      --bg: #ffffff;
+      --bg-soft: #f7f8fc;
+      --ink: #14161f;
+      --ink-soft: #555a6b;
+      --line: #e7e9f2;
+      --a1: #6366f1;   /* indigo */
+      --a2: #a855f7;   /* violet */
+      --a3: #ec4899;   /* pink   */
+      --grad: linear-gradient(120deg, var(--a1), var(--a2) 55%, var(--a3));
+      --radius: 18px;
+      --shadow: 0 10px 40px -12px rgba(40, 30, 90, 0.18);
+      --shadow-lg: 0 30px 70px -24px rgba(40, 30, 90, 0.30);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 84px; }
+    body {
+      margin: 0; background: var(--bg); color: var(--ink);
+      font-family: 'Inter', system-ui, sans-serif; line-height: 1.65;
+      -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    }
+    h1, h2, h3 { font-family: 'Plus Jakarta Sans', 'Inter', sans-serif; letter-spacing: -0.02em; }
+    a { color: var(--a1); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .wrap { max-width: 1040px; margin: 0 auto; padding: 0 22px; }
+
+    /* scroll progress */
+    #progress { position: fixed; top: 0; left: 0; height: 3px; width: 0%; z-index: 60; background: var(--grad); }
+
+    /* navbar */
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      backdrop-filter: saturate(160%) blur(12px); background: rgba(255,255,255,0.78);
+      border-bottom: 1px solid var(--line);
+    }
+    nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 60px; }
+    .brand { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.1rem; }
+    .brand .z { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .navlinks { display: flex; gap: 22px; align-items: center; }
+    .navlinks a { color: var(--ink-soft); font-size: 0.92rem; font-weight: 500; }
+    .navlinks a:hover { color: var(--ink); text-decoration: none; }
+    .navlinks .code-pill { padding: 7px 14px; border-radius: 999px; color: #fff; background: var(--ink);
+      font-weight: 600; display: inline-flex; gap: 7px; align-items: center; }
+    .navlinks .code-pill:hover { background: var(--a1); }
+    @media (max-width: 720px){ .navlinks a:not(.code-pill){ display:none; } }
+
+    /* hero */
+    .hero { position: relative; overflow: hidden; padding: 70px 0 40px; text-align: center; }
+    .hero::before {
+      content:""; position:absolute; inset:-30% -10% auto -10%; height: 520px; z-index:-1;
+      background:
+        radial-gradient(600px 300px at 22% 18%, rgba(99,102,241,0.20), transparent 60%),
+        radial-gradient(560px 320px at 80% 8%, rgba(168,85,247,0.18), transparent 60%),
+        radial-gradient(520px 300px at 60% 40%, rgba(236,72,153,0.12), transparent 60%);
+      filter: blur(6px);
+    }
+    .badge {
+      display: inline-flex; gap: 8px; align-items: center; padding: 6px 14px; border-radius: 999px;
+      background: rgba(99,102,241,0.10); color: var(--a1); font-weight: 700; font-size: 0.8rem;
+      letter-spacing: 0.04em; border: 1px solid rgba(99,102,241,0.22); text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(1.9rem, 4.4vw, 3.05rem); line-height: 1.12; font-weight: 800;
+      margin: 18px auto 6px; max-width: 14ch; max-width: 900px;
+    }
+    .hero h1 .g { background: var(--grad); -webkit-background-clip:text; background-clip:text; color: transparent; }
+    .authors { font-size: 1.12rem; font-weight: 600; margin-top: 16px; }
+    .authors a { color: var(--ink); }
+    .authors a:hover { color: var(--a1); text-decoration: none; }
+    .affil { color: var(--ink-soft); margin-top: 6px; font-size: 0.98rem; }
+    .affil .email { font-size: 0.84rem; color: #8b90a3; }
+    .cta { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 26px; }
+    .btn {
+      display: inline-flex; gap: 9px; align-items: center; padding: 11px 20px; border-radius: 999px;
+      font-weight: 600; font-size: 0.96rem; border: 1px solid transparent; transition: transform .15s, box-shadow .15s;
+    }
+    .btn:hover { text-decoration: none; transform: translateY(-2px); }
+    .btn-dark { background: var(--ink); color: #fff; }
+    .btn-dark:hover { box-shadow: var(--shadow); }
+    .btn-ghost { background: #fff; color: var(--ink); border-color: var(--line); }
+    .btn-disabled { background: #f0f1f6; color: #a8adbd; cursor: not-allowed; pointer-events: none; }
+    .hint { margin-top: 12px; color: #9aa0b2; font-size: 0.82rem; }
+
+    /* teaser */
+    .teaser { margin: 26px auto 0; max-width: 980px; }
+    .teaser video { width: 100%; display: block; border-radius: var(--radius); box-shadow: var(--shadow-lg); background:#000; }
+
+    /* sections */
+    section.block { padding: 56px 0; }
+    section.block.soft { background: var(--bg-soft); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+    .eyebrow { text-align: center; color: var(--a1); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 0.78rem; }
+    .h2 { text-align: center; font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 800; margin: 8px 0 4px; }
+    .lead { text-align: center; color: var(--ink-soft); max-width: 760px; margin: 0 auto; }
+
+    /* stats */
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+    .stat {
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 18px;
+      text-align: center; box-shadow: var(--shadow); position: relative; overflow: hidden;
+    }
+    .stat::after { content:""; position:absolute; inset: 0 0 auto 0; height: 4px; background: var(--grad); }
+    .stat .num { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: clamp(2rem, 5vw, 2.9rem);
+      background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; line-height: 1; }
+    .stat .lbl { color: var(--ink-soft); margin-top: 10px; font-size: 0.92rem; font-weight: 500; }
+    @media (max-width: 720px){ .stats { grid-template-columns: 1fr; } }
+
+    /* card / prose */
+    .card { background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 30px; box-shadow: var(--shadow); }
+    .prose { font-size: 1.04rem; color: #2b2f3d; }
+    .prose b { color: var(--ink); }
+
+    /* contributions */
+    .contribs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 34px; }
+    .contrib { background:#fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); }
+    .contrib .ic { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; color: #fff;
+      background: var(--grad); font-size: 1.1rem; margin-bottom: 14px; }
+    .contrib h3 { margin: 0 0 6px; font-size: 1.06rem; }
+    .contrib p { margin: 0; color: var(--ink-soft); font-size: 0.94rem; }
+    @media (max-width: 820px){ .contribs { grid-template-columns: 1fr; } }
+
+    /* figures */
+    figure.fig { margin: 30px 0 0; }
+    figure.fig .frame {
+      border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; background:#fff;
+      box-shadow: var(--shadow); cursor: zoom-in; transition: transform .2s, box-shadow .2s;
+    }
+    figure.fig .frame:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
+    figure.fig img { width: 100%; display: block; }
+    figure.fig.narrow .frame { max-width: 780px; margin: 0 auto; }
+    figcaption { color: var(--ink-soft); font-size: 0.92rem; margin-top: 14px; text-align: justify; }
+    figcaption b { color: var(--ink); }
+
+    /* result tables */
+    .gen { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 32px; }
+    @media (max-width: 860px){ .gen { grid-template-columns: 1fr; } }
+    .tbl-card { background:#fff; border:1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow:hidden; }
+    .tbl-card .cap { margin:0; padding:13px 18px; font-size:0.98rem; font-weight:700; border-bottom:1px solid var(--line);
+      background: var(--bg-soft); display:flex; align-items:center; gap:8px; }
+    .tbl-card .cap .dot { width:9px; height:9px; border-radius:50%; background: var(--grad); }
+    table.rt { width:100%; border-collapse: collapse; font-size:0.85rem; }
+    table.rt th, table.rt td { padding: 7px 10px; text-align:center; white-space:nowrap; }
+    table.rt th:first-child, table.rt td:first-child { text-align:left; }
+    table.rt thead th { color: var(--ink-soft); font-weight:700; border-bottom:2px solid var(--line);
+      font-size:0.74rem; text-transform:uppercase; letter-spacing:0.03em; }
+    table.rt tr.grp td { background: rgba(99,102,241,0.07); color: var(--a1); font-weight:700;
+      font-size:0.72rem; text-transform:uppercase; letter-spacing:0.05em; }
+    table.rt tr.full td { font-weight:700; }
+    table.rt tbody tr:not(.grp) td { border-top: 1px solid #f1f2f8; }
+    table.rt tr.ours td { background: rgba(168,85,247,0.12); font-weight:800; color: var(--ink); }
+    .tbl-note { color: var(--ink-soft); font-size:0.9rem; margin-top:16px; text-align:center; }
+
+    /* lightbox */
+    #lb { position: fixed; inset: 0; background: rgba(12,12,20,0.86); display: none; place-items: center; z-index: 100; padding: 30px; cursor: zoom-out; }
+    #lb.open { display: grid; }
+    #lb img { max-width: 95vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); }
+
+    /* footer */
+    footer { padding: 44px 0; border-top: 1px solid var(--line); color: var(--ink-soft); text-align: center; font-size: 0.9rem; }
+    footer a { color: var(--ink-soft); text-decoration: underline; }
+
+    /* reveal */
+    .reveal { opacity: 0; transform: translateY(22px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce){ .reveal { opacity:1; transform:none; } html{scroll-behavior:auto;} }
   </style>
 </head>
 
 <body>
+  <div id="progress"></div>
 
-  <!-- ===================== HERO ===================== -->
-  <section class="hero">
-    <div class="hero-body">
-      <div class="container is-max-desktop has-text-centered">
-        <h1 class="title is-1 hero-title publication-title">
-          3DZip: Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering
-        </h1>
-
-        <div class="is-size-5 publication-authors" style="margin-top: 1rem; font-weight: bold;">
-          <span class="author-block">
-            <a href="https://sites.google.com/view/changwoobaek00/%ED%99%88" target="_blank">Changwoo Baek</a>
-          </span>
-          <span class="author-block">
-            <a href="https://www.pnu-cvsp.com/prof" target="_blank">Kyeongbo Kong</a><sup>&dagger;</sup>
-          </span>
-        </div>
-
-        <div class="is-size-6 publication-authors" style="margin-top: 0.5rem;">
-          <span class="author-block">Pusan National University</span>
-          <br>
-          <span class="is-size-6">{higok18, kbkong}@pusan.ac.kr &nbsp;&middot;&nbsp; <sup>&dagger;</sup> Corresponding author</span>
-        </div>
-
-        <div class="is-size-3 conference" style="margin-top: 1rem;">ECCV 2026</div>
-
-        <!-- Links -->
-        <div class="column has-text-centered">
-          <div class="link-block" style="margin-top: 1rem;">
-            <a class="button is-dark is-rounded" disabled title="Coming soon">
-              <span class="icon"><i class="ai ai-arxiv"></i></span>
-              <span>arXiv</span>
-            </a>
-            <a class="button is-dark is-rounded" href="https://github.com/higokri/3dzip" target="_blank">
-              <span class="icon"><i class="fab fa-github"></i></span>
-              <span>Code</span>
-            </a>
-          </div>
-          <p class="is-size-7" style="color:#888; margin-top:0.4rem;">arXiv coming soon</p>
-        </div>
+  <!-- NAV -->
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="#top"><span class="z">3DZip</span></a>
+      <div class="navlinks">
+        <a href="#abstract">Abstract</a>
+        <a href="#method">Method</a>
+        <a href="#results">Results</a>
+        <a class="code-pill" href="https://github.com/higokri/3dzip" target="_blank"><i class="fab fa-github"></i> Code</a>
       </div>
     </div>
-  </section>
+  </nav>
 
-  <!-- ===================== TEASER VIDEO ===================== -->
-  <section class="hero teaser">
-    <div class="container is-max-desktop">
-      <div class="teaser-wrap has-text-centered section-figure">
-        <video id="teaser-video" muted playsinline style="width:100%; border-radius:6px;">
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="wrap">
+      <span class="badge"><i class="fas fa-star"></i> ECCV 2026</span>
+      <h1>3DZip: Spatial-Aware Feature Diversity-Guided <span class="g">Token Compression</span> for 3D Question Answering</h1>
+
+      <div class="authors">
+        <a href="https://sites.google.com/view/changwoobaek00/%ED%99%88" target="_blank">Changwoo Baek</a> &nbsp;&nbsp;
+        <a href="https://www.pnu-cvsp.com/prof" target="_blank">Kyeongbo Kong</a><sup>&dagger;</sup>
+      </div>
+      <div class="affil">
+        Pusan National University<br>
+        <span class="email">{higok18, kbkong}@pusan.ac.kr &middot; <sup>&dagger;</sup>Corresponding author</span>
+      </div>
+
+      <div class="cta">
+        <a class="btn btn-disabled" title="Coming soon"><i class="ai ai-arxiv"></i> arXiv <span style="opacity:.7;font-size:.8rem">soon</span></a>
+        <a class="btn btn-dark" href="https://github.com/higokri/3dzip" target="_blank"><i class="fab fa-github"></i> Code</a>
+        <a class="btn btn-ghost" href="#method"><i class="fas fa-diagram-project"></i> Method</a>
+      </div>
+      <div class="hint">arXiv coming soon</div>
+
+      <div class="teaser reveal">
+        <video id="teaser-video" muted playsinline poster="static/images/pipeline.png">
           <source src="static/videos/teaser.mp4" type="video/mp4">
-          Your browser does not support the video tag.
         </video>
       </div>
     </div>
+  </header>
+
+  <!-- HIGHLIGHTS -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow reveal">At a glance</div>
+      <div class="h2 reveal">Compress aggressively, keep the accuracy</div>
+      <div class="stats">
+        <div class="stat reveal"><div class="num" data-target="128" data-suffix="">0</div><div class="lbl">tokens per scene</div></div>
+        <div class="stat reveal"><div class="num" data-target="94.7" data-suffix="%" data-dec="1">0</div><div class="lbl">of original performance retained</div></div>
+        <div class="stat reveal"><div class="num" data-target="1.92" data-suffix="×" data-dec="2">0</div><div class="lbl">faster inference</div></div>
+      </div>
+    </div>
   </section>
 
-  <!-- ===================== ABSTRACT ===================== -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">Abstract</h2>
-          <div class="content has-text-justified">
-            <p>
-              Recent 3D vision-language models (3D VLMs) construct geometry-aware tokens by projecting 2D visual
-              features into world coordinates, enabling spatial reasoning for tasks such as 3D question answering.
-              However, this design generates thousands of tokens per scene, resulting in substantial computational
-              and memory overhead. While token compression has been extensively studied in 2D VLMs, existing
-              approaches rely on semantic relevance or attention-based selection that overlook the structured spatial
-              nature of 3D tokens. Moreover, redundancy in 3D representations cannot be resolved by spatial proximity
-              alone, as object-level token imbalance persists even after spatial aggregation. To address this, we
-              propose <b>3DZip</b>, a three-stage token compression framework that first applies coarse voxelization
-              to remove point-level redundancy, then selects anchor tokens based on feature-space diversity via a
-              Determinantal Point Process, and finally merges remaining tokens under spatial constraints to preserve
-              geometric coherence. Experiments on three 3D question answering benchmarks demonstrate that 3DZip
-              consistently outperforms existing compression methods, retaining 94.7% of the original performance with
-              only 128 tokens, achieving a 1.92&times; faster inference speed.
-            </p>
-          </div>
+  <!-- ABSTRACT -->
+  <section class="block soft" id="abstract">
+    <div class="wrap">
+      <div class="eyebrow reveal">Abstract</div>
+      <div class="h2 reveal">Training-free token compression for 3D VLMs</div>
+      <div class="card prose reveal" style="margin-top: 28px; text-align: justify;">
+        Recent 3D vision-language models (3D VLMs) construct geometry-aware tokens by projecting 2D visual features
+        into world coordinates, enabling spatial reasoning for tasks such as 3D question answering. However, this
+        design generates thousands of tokens per scene, resulting in substantial computational and memory overhead.
+        While token compression has been extensively studied in 2D VLMs, existing approaches rely on semantic
+        relevance or attention-based selection that overlook the structured spatial nature of 3D tokens. Moreover,
+        redundancy in 3D representations cannot be resolved by spatial proximity alone, as object-level token
+        imbalance persists even after spatial aggregation. To address this, we propose <b>3DZip</b>, a three-stage
+        token compression framework that first applies coarse <b>voxelization</b> to remove point-level redundancy,
+        then selects anchor tokens based on <b>feature-space diversity</b> via a Determinantal Point Process, and
+        finally <b>merges</b> remaining tokens under spatial constraints to preserve geometric coherence. Experiments
+        on three 3D question answering benchmarks demonstrate that 3DZip consistently outperforms existing compression
+        methods, retaining 94.7% of the original performance with only 128 tokens, achieving a 1.92× faster inference
+        speed.
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTRIBUTIONS -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow reveal">Contributions</div>
+      <div class="h2 reveal">Three takeaways</div>
+      <div class="contribs">
+        <div class="contrib reveal">
+          <div class="ic"><i class="fas fa-scale-unbalanced"></i></div>
+          <h3>Object-level imbalance</h3>
+          <p>We reveal a severe object-level token imbalance induced by projection-based multi-view aggregation that persists even after spatial aggregation.</p>
+        </div>
+        <div class="contrib reveal">
+          <div class="ic"><i class="fas fa-shapes"></i></div>
+          <h3>Diversity over proximity</h3>
+          <p>Spatial grouping alone cannot resolve it — feature-level diversity is crucial for balancing object coverage in multi-view 3D scenes.</p>
+        </div>
+        <div class="contrib reveal">
+          <div class="ic"><i class="fas fa-layer-group"></i></div>
+          <h3>3DZip framework</h3>
+          <p>A structured three-stage pipeline: voxel aggregation, feature-diversity anchor selection (DPP), and spatially-constrained merging.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ===================== PRELIMINARY ===================== -->
-  <section class="section" style="background-color: #fafafa;">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <h2 class="title is-3">Preliminary: Projection-based 3D VLMs</h2>
-          <div class="section-figure">
-            <img src="static/images/construction.png" alt="Geometry-aware 3D token construction">
-            <p class="figure-caption has-text-justified">
-              <b>Geometry-aware 3D token construction.</b> Multi-view RGB-D inputs are projected into world coordinates
-              to form geometry-aware 3D tokens via 3D positional embedding. The large token cardinality
-              <i>N = M &times; N<sub>2D</sub></i> motivates an efficient token compression strategy.
-            </p>
-          </div>
-        </div>
+  <!-- PRELIMINARY -->
+  <section class="block soft">
+    <div class="wrap">
+      <div class="eyebrow reveal">Preliminary</div>
+      <div class="h2 reveal">Projection-based 3D VLMs</div>
+      <figure class="fig reveal">
+        <div class="frame"><img src="static/images/construction.png" alt="Geometry-aware 3D token construction"></div>
+        <figcaption><b>Geometry-aware 3D token construction.</b> Multi-view RGB-D inputs are projected into world
+          coordinates to form geometry-aware 3D tokens via 3D positional embedding. The large token cardinality
+          <i>N = M × N<sub>2D</sub></i> motivates an efficient token compression strategy.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- METHOD -->
+  <section class="block" id="method">
+    <div class="wrap">
+      <div class="eyebrow reveal">Method</div>
+      <div class="h2 reveal">A three-stage compression pipeline</div>
+      <p class="lead reveal" style="margin-top:8px;">Voxelization → diversity-aware anchor selection (DPP) → spatially-constrained merging.</p>
+      <figure class="fig reveal">
+        <div class="frame"><img src="static/images/pipeline.png" alt="3DZip three-stage pipeline"></div>
+        <figcaption><b>Overview of the proposed three-stage token compression pipeline.</b> Given geometry-aware 3D
+          tokens 𝒱, we first apply coarse <b>voxelization</b> to obtain a spatially reduced set, then perform
+          <b>diversity-aware anchor selection</b> via a Determinantal Point Process to identify semantically
+          representative anchors, and finally <b>spatially-constrained token merging</b> aggregates nearby non-anchor
+          tokens into anchors to produce the compressed set.</figcaption>
+      </figure>
+      <div class="card prose reveal" style="margin-top: 26px; text-align: justify;">
+        Projection-based multi-view aggregation introduces two distinct forms of redundancy. <b>Point-level
+        redundancy</b> arises when identical physical surfaces are observed across multiple viewpoints, producing
+        overlapping tokens at nearly identical locations. <b>Object-level redundancy</b> occurs when a single object
+        is represented by tokens from multiple surface regions, which spatial aggregation alone cannot collapse. 3DZip
+        explicitly decomposes redundancy into point-level density, object-level duplication, and geometric
+        consistency, and addresses each with a dedicated stage.
       </div>
     </div>
   </section>
 
-  <!-- ===================== METHOD ===================== -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <h2 class="title is-3">Method</h2>
-          <div class="section-figure">
-            <img src="static/images/pipeline.png" alt="3DZip three-stage pipeline">
-            <p class="figure-caption has-text-justified">
-              <b>Overview of the proposed three-stage token compression pipeline.</b> Given geometry-aware 3D tokens
-              &#119985;, we first apply coarse <b>voxelization</b> to obtain a spatially reduced set, then perform
-              <b>diversity-aware anchor selection</b> via a Determinantal Point Process to identify semantically
-              representative anchors, and finally <b>spatially-constrained token merging</b> aggregates nearby
-              non-anchor tokens into anchors to produce the compressed set.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <div class="content has-text-justified" style="margin-top: 2rem;">
-        <p>
-          Projection-based multi-view aggregation introduces two distinct forms of redundancy. <b>Point-level
-          redundancy</b> arises when identical physical surfaces are observed across multiple viewpoints, producing
-          overlapping tokens at nearly identical locations. <b>Object-level redundancy</b> occurs when a single object
-          is represented by tokens from multiple surface regions, which spatial aggregation alone cannot collapse.
-          3DZip explicitly decomposes redundancy into point-level density, object-level duplication, and geometric
-          consistency, and addresses each with a dedicated stage.
-        </p>
-      </div>
+  <!-- ANALYSIS -->
+  <section class="block soft">
+    <div class="wrap">
+      <div class="eyebrow reveal">Analysis</div>
+      <div class="h2 reveal">Why feature diversity matters</div>
+      <figure class="fig reveal">
+        <div class="frame"><img src="static/images/coverage.png" alt="Object-level token allocation across selection strategies"></div>
+        <figcaption><b>Object-level token allocation across selection strategies on the full SQA3D test scenes.</b>
+          Per-object token counts for 1,729 foreground object instances across 67 ScanNet scenes. The voxel-only
+          distribution exhibits a pronounced long-tail pattern; spatial sampling (XYZ-DPP) still concentrates on a
+          limited subset of objects (47% coverage), whereas <b>Feature-DPP</b> distributes tokens more evenly,
+          improving object coverage to 64%.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ===================== ANALYSIS ===================== -->
-  <section class="section" style="background-color: #fafafa;">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <h2 class="title is-3">Why feature diversity matters</h2>
-          <div class="section-figure">
-            <img src="static/images/coverage.png" alt="Object-level token allocation across selection strategies">
-            <p class="figure-caption has-text-justified">
-              <b>Object-level token allocation across selection strategies on the full SQA3D test scenes.</b>
-              Per-object token counts for 1,729 foreground object instances across 67 ScanNet scenes. The voxel-only
-              distribution exhibits a pronounced long-tail pattern; spatial sampling (XYZ-DPP) still concentrates on a
-              limited subset of objects (47% coverage), whereas <b>Feature-DPP</b> distributes tokens more evenly,
-              improving object coverage to 64%.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- RESULTS -->
+  <section class="block" id="results">
+    <div class="wrap">
+      <div class="eyebrow reveal">Results</div>
+      <div class="h2 reveal">State-of-the-art under every token budget</div>
+      <figure class="fig narrow reveal">
+        <div class="frame"><img src="static/images/main-results.png" alt="Main results on 3D question answering benchmarks"></div>
+        <figcaption><b>Main results on three 3D question answering benchmarks</b> (ScanQA, SQA3D, OpenEQA). Under
+          matched token budgets (128 / 64 / 32), 3DZip consistently outperforms prior 2D token compression methods.
+          With only <b>128</b> tokens, 3DZip retains <b>94.7%</b> of the full-token (1410) performance.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ===================== RESULTS ===================== -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <h2 class="title is-3">Results</h2>
-          <div class="section-figure">
-            <img src="static/images/main-results.png" alt="Main results on 3D question answering benchmarks"
-              style="max-width:760px; width:100%;">
-            <p class="figure-caption has-text-justified" style="max-width:760px; margin-left:auto; margin-right:auto;">
-              <b>Main results on three 3D question answering benchmarks</b> (ScanQA, SQA3D, OpenEQA). Under matched
-              token budgets (128 / 64 / 32 tokens), 3DZip consistently outperforms prior 2D token compression methods.
-              With only <b>128</b> tokens, 3DZip retains <b>94.7%</b> of the full-token (1410) performance.
-            </p>
-          </div>
+  <!-- GENERALIZATION -->
+  <section class="block soft" id="generalization">
+    <div class="wrap">
+      <div class="eyebrow reveal">Generalization</div>
+      <div class="h2 reveal">Works across different 3D VLM backbones</div>
+      <p class="lead reveal" style="margin-top:8px;">3DZip is applied after 3D token construction without modifying the
+        backbone. It consistently beats all baselines on <b>Video-3D-LLM</b> and <b>SR-3D</b> under every token budget.</p>
+
+      <div class="gen">
+        <!-- Video-3D-LLM -->
+        <div class="tbl-card reveal">
+          <p class="cap"><span class="dot"></span> Video-3D-LLM <span style="color:var(--ink-soft);font-weight:500;font-size:.85rem;">(CVPR'25)</span></p>
+          <table class="rt">
+            <thead><tr><th>Method</th><th>ScanQA</th><th>SQA3D</th><th>OpenEQA</th></tr></thead>
+            <tbody>
+              <tr class="grp"><td colspan="4">All 3920 Tokens</td></tr>
+              <tr class="full"><td>Video-3D-LLM</td><td>29.9</td><td>58.4</td><td>59.4</td></tr>
+              <tr class="grp"><td colspan="4">Retain 128 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>23.6</td><td>51.2</td><td>53.5</td></tr>
+              <tr><td>Voxelization</td><td>24.6</td><td>52.2</td><td>52.9</td></tr>
+              <tr><td>DTC</td><td>23.7</td><td>51.9</td><td>53.5</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>24.7</td><td>53.1</td><td>54.6</td></tr>
+              <tr class="grp"><td colspan="4">Retain 64 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>22.3</td><td>49.2</td><td>51.4</td></tr>
+              <tr><td>Voxelization</td><td>22.7</td><td>50.0</td><td>51.9</td></tr>
+              <tr><td>DTC</td><td>22.5</td><td>49.2</td><td>52.0</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>23.8</td><td>52.2</td><td>54.6</td></tr>
+              <tr class="grp"><td colspan="4">Retain 32 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>21.0</td><td>48.4</td><td>50.2</td></tr>
+              <tr><td>Voxelization</td><td>20.9</td><td>48.3</td><td>50.3</td></tr>
+              <tr><td>DTC</td><td>20.8</td><td>49.0</td><td>50.0</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>23.3</td><td>51.8</td><td>53.0</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- SR-3D -->
+        <div class="tbl-card reveal">
+          <p class="cap"><span class="dot"></span> SR-3D <span style="color:var(--ink-soft);font-weight:500;font-size:.85rem;">(ICLR'26)</span></p>
+          <table class="rt">
+            <thead><tr><th>Method</th><th>ScanQA</th><th>SQA3D</th><th>OpenEQA</th></tr></thead>
+            <tbody>
+              <tr class="grp"><td colspan="4">All 2420 Tokens</td></tr>
+              <tr class="full"><td>SR-3D</td><td>29.6</td><td>61.0</td><td>61.7</td></tr>
+              <tr class="grp"><td colspan="4">Retain 128 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>23.0</td><td>51.5</td><td>54.3</td></tr>
+              <tr><td>Voxelization</td><td>22.8</td><td>51.1</td><td>52.2</td></tr>
+              <tr><td>DTC</td><td>23.5</td><td>51.4</td><td>53.5</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>24.2</td><td>53.2</td><td>54.5</td></tr>
+              <tr class="grp"><td colspan="4">Retain 64 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>21.9</td><td>50.3</td><td>52.0</td></tr>
+              <tr><td>Voxelization</td><td>21.1</td><td>48.8</td><td>49.6</td></tr>
+              <tr><td>DTC</td><td>21.1</td><td>49.6</td><td>52.0</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>23.1</td><td>51.9</td><td>52.6</td></tr>
+              <tr class="grp"><td colspan="4">Retain 32 Tokens</td></tr>
+              <tr><td>VisPruner</td><td>20.1</td><td>49.1</td><td>51.5</td></tr>
+              <tr><td>Voxelization</td><td>19.9</td><td>47.9</td><td>50.3</td></tr>
+              <tr><td>DTC</td><td>19.7</td><td>48.1</td><td>51.4</td></tr>
+              <tr class="ours"><td>3DZip (Ours)</td><td>21.5</td><td>49.6</td><td>51.7</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
+      <p class="tbl-note reveal"><b>Generalization across projection-based 3D VLMs.</b> 3DZip outperforms all baselines
+        across both architectures and all token budgets — the gains are largest under aggressive compression (32/64
+        tokens), where retaining semantically diverse tokens matters most.</p>
     </div>
   </section>
 
-  <!-- ===================== QUALITATIVE ===================== -->
-  <section class="section" style="background-color: #fafafa;">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-full">
-          <h2 class="title is-3">Qualitative Results</h2>
-          <div class="section-figure">
-            <img src="static/images/qualitative.png" alt="Qualitative comparison of retained 3D tokens">
-            <p class="figure-caption has-text-justified">
-              <b>Qualitative comparison of retained 3D tokens on OpenEQA.</b> VisPruner tends to allocate many tokens
-              to floor regions, while DTC may miss key objects. In contrast, 3DZip retains tokens on multiple
-              semantically important objects and further enriches them through spatially-constrained merging.
-            </p>
-          </div>
-        </div>
-      </div>
+  <!-- QUALITATIVE -->
+  <section class="block">
+    <div class="wrap">
+      <div class="eyebrow reveal">Qualitative</div>
+      <div class="h2 reveal">What 3DZip keeps</div>
+      <figure class="fig reveal">
+        <div class="frame"><img src="static/images/qualitative.png" alt="Qualitative comparison of retained 3D tokens"></div>
+        <figcaption><b>Qualitative comparison of retained 3D tokens on OpenEQA.</b> VisPruner tends to allocate many
+          tokens to floor regions, while DTC may miss key objects. In contrast, 3DZip retains tokens on multiple
+          semantically important objects and further enriches them through spatially-constrained merging.</figcaption>
+      </figure>
     </div>
   </section>
 
-  <!-- ===================== FOOTER ===================== -->
-  <footer class="footer">
-    <div class="container">
-      <div class="columns is-centered">
-        <div class="column is-8 has-text-centered content">
-          <p>
-            This website is licensed under a
-            <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons
-              Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This page was built using the
-            <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project
-              Page Template</a>, which is adapted from the
-            <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-          </p>
-        </div>
-      </div>
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <p style="margin:0 0 8px;"><b>3DZip</b> · ECCV 2026 · Pusan National University</p>
+      <p style="margin:0;">
+        Page template adapted from the
+        <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>
+        / <a href="https://nerfies.github.io" target="_blank">Nerfies</a>. Licensed under
+        <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+      </p>
     </div>
   </footer>
 
+  <div id="lb"><img alt=""></div>
+
   <script>
-    // Start the teaser video after a 1-second delay, then loop with a 3-second pause between plays.
-    window.addEventListener('load', function () {
-      var v = document.getElementById('teaser-video');
+    // scroll progress bar
+    const prog = document.getElementById('progress');
+    const onScroll = () => {
+      const h = document.documentElement;
+      const p = (h.scrollTop) / (h.scrollHeight - h.clientHeight);
+      prog.style.width = (p * 100) + '%';
+    };
+    document.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // animated counters
+    const animateCount = (el) => {
+      const target = parseFloat(el.dataset.target);
+      const dec = parseInt(el.dataset.dec || '0', 10);
+      const suffix = el.dataset.suffix || '';
+      const dur = 1400; const start = performance.now();
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const tick = (now) => {
+        const t = Math.min(1, (now - start) / dur);
+        const v = (target * ease(t)).toFixed(dec);
+        el.textContent = v + suffix;
+        if (t < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    };
+    const cio = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { animateCount(e.target); cio.unobserve(e.target); } });
+    }, { threshold: 0.6 });
+    document.querySelectorAll('.num[data-target]').forEach(el => cio.observe(el));
+
+    // teaser video: start after 1s, loop with a 3s pause
+    window.addEventListener('load', () => {
+      const v = document.getElementById('teaser-video');
       if (!v) return;
-      function play() {
-        var p = v.play();
-        if (p && p.catch) { p.catch(function () {}); }
-      }
-      v.addEventListener('ended', function () {
-        setTimeout(function () { v.currentTime = 0; play(); }, 3000);
-      });
+      const play = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+      v.addEventListener('ended', () => setTimeout(() => { v.currentTime = 0; play(); }, 3000));
       setTimeout(play, 1000);
     });
-  </script>
 
+    // lightbox
+    const lb = document.getElementById('lb'); const lbImg = lb.querySelector('img');
+    document.querySelectorAll('figure.fig .frame').forEach(f => {
+      f.addEventListener('click', () => { lbImg.src = f.querySelector('img').src; lb.classList.add('open'); });
+    });
+    lb.addEventListener('click', () => lb.classList.remove('open'));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+  </script>
 </body>
 </html>
