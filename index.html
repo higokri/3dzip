@@ -158,7 +158,13 @@
     .chip.now small { color: rgba(255,255,255,0.75); }
     .shift .arrow { font-size: 1.5rem; color: var(--a1); }
     .band .h2 .g { background: none; -webkit-text-fill-color: #7c3aed; color: #7c3aed; }
-    .m2d { margin-top: 20px; display: flex; flex-direction: column; gap: 3px; align-items: center; }
+    .vs { display: flex; align-items: center; justify-content: center; gap: 30px; flex-wrap: wrap; }
+    .vs-col { min-width: 180px; }
+    .vs-head { font-family: 'Plus Jakarta Sans'; font-weight: 800; font-size: 1.45rem; line-height: 1; }
+    .vs-head.dim { color: #aeb4c4; }
+    .vs-head.accent { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 2.1rem; }
+    .vs-sub { color: var(--ink-soft); font-size: 0.95rem; font-weight: 600; margin-top: 10px; line-height: 1.4; }
+    .m2d { margin-top: 14px; display: flex; flex-direction: column; gap: 3px; align-items: center; }
     .m2d-lbl { color: #aab0c0; font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
       letter-spacing: 0.08em; margin-bottom: 6px; }
     .mline { color: #9aa0b2; font-size: 0.82rem; font-weight: 500; line-height: 1.5; }
@@ -303,28 +309,32 @@
   <!-- 2D -> 3D TRANSITION -->
   <section class="block band">
     <div class="wrap">
-      <div class="shift reveal">
-        <span class="chip done">2D&nbsp;VLM compression <span class="x">✗ 3D</span><small>extensively studied for images</small></span>
+      <div class="vs reveal">
+        <div class="vs-col">
+          <div class="vs-head dim">2D&nbsp;VLM</div>
+          <div class="m2d">
+            <span class="mline">ToMe <span class="v">ICLR'23</span></span>
+            <span class="mline">FastV <span class="v">ECCV'24</span></span>
+            <span class="mline">PruMerge <span class="v">CVPR'24</span></span>
+            <span class="mline">FitPrune <span class="v">AAAI'25</span></span>
+            <span class="mline">VTW <span class="v">AAAI'25</span></span>
+            <span class="mline">SparseVLM <span class="v">ICML'25</span></span>
+            <span class="mline">PyramidDrop <span class="v">CVPR'25</span></span>
+            <span class="mline">VisionZip <span class="v">CVPR'25</span></span>
+            <span class="mline">FasterVLM <span class="v">CVPR'25</span></span>
+            <span class="mline">VisPruner <span class="v">ICCV'25</span></span>
+            <span class="mline more">⋯</span>
+          </div>
+        </div>
         <span class="arrow"><i class="fas fa-arrow-right-long"></i></span>
-        <span class="chip now">3D&nbsp;VLM compression ✓<small>geometry-aware, with 3DZip</small></span>
+        <div class="vs-col">
+          <div class="vs-head accent">3DZip</div>
+          <div class="vs-sub">geometry-aware token<br>compression for 3D&nbsp;VLM</div>
+        </div>
       </div>
-      <div class="m2d reveal">
-        <span class="m2d-lbl">Built for 2D VLMs</span>
-        <span class="mline">ToMe <span class="v">ICLR'23</span></span>
-        <span class="mline">FastV <span class="v">ECCV'24</span></span>
-        <span class="mline">PruMerge <span class="v">CVPR'24</span></span>
-        <span class="mline">FitPrune <span class="v">AAAI'25</span></span>
-        <span class="mline">VTW <span class="v">AAAI'25</span></span>
-        <span class="mline">SparseVLM <span class="v">ICML'25</span></span>
-        <span class="mline">PyramidDrop <span class="v">CVPR'25</span></span>
-        <span class="mline">VisionZip <span class="v">CVPR'25</span></span>
-        <span class="mline">FasterVLM <span class="v">CVPR'25</span></span>
-        <span class="mline">VisPruner <span class="v">ICCV'25</span></span>
-        <span class="mline more">⋯</span>
-      </div>
-      <div class="h2 reveal" style="margin-top: 24px;">Token compression was built for 2D.<br><span class="g">Now at 3D!</span></div>
+      <div class="h2 reveal" style="margin-top: 28px;">Token compression was built for 2D.<br><span class="g">Now at 3D!</span></div>
       <p class="lead reveal" style="margin-top: 6px;">These methods compress tokens for 2D VLMs and ignore spatial
-        structure. 3D tokens are geometric and structured — 3DZip is the first to compress them in a geometry-aware way.</p>
+        structure. 3D tokens are geometric and structured — 3DZip compresses them in a geometry-aware way for 3D&nbsp;VLM.</p>
     </div>
   </section>
 
