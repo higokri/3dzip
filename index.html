@@ -165,8 +165,8 @@
     .vs-head.accent { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 2.1rem; }
     .vs-sub { color: var(--ink-soft); font-size: 0.95rem; font-weight: 600; margin-top: 10px; line-height: 1.4; }
     .m2d { margin-top: 14px; display: flex; flex-direction: column; gap: 3px; align-items: center; }
-    .m2d-lbl { color: #aab0c0; font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; margin-bottom: 6px; }
+    .band .now3d { font-size: clamp(2rem, 5.2vw, 3.3rem); }
+    .m2d-lbl { color: #5a6072; font-size: 0.9rem; font-weight: 700; margin-bottom: 8px; }
     .mline { color: #9aa0b2; font-size: 0.82rem; font-weight: 500; line-height: 1.5; }
     .mline .v { color: #c4c9d6; font-size: 0.7rem; margin-left: 5px; }
     .mline.more { color: #c6cad8; font-size: 1.15rem; letter-spacing: 3px; line-height: 1; margin-top: 3px; }
@@ -309,33 +309,26 @@
   <!-- 2D -> 3D TRANSITION -->
   <section class="block band">
     <div class="wrap">
-      <div class="h2 reveal">Token compression was built for 2D.<br><span class="g">Now at 3D!</span></div>
-      <p class="lead reveal" style="margin-top: 6px;">These methods compress tokens for 2D VLMs and ignore spatial
-        structure. 3D tokens are geometric and structured — 3DZip compresses them in a geometry-aware way for 3D&nbsp;VLM.</p>
+      <div class="h2 reveal">Token compression was built for 2D.</div>
 
-      <div class="vs reveal" style="margin-top: 30px;">
-        <div class="vs-col">
-          <div class="vs-head dim">2D&nbsp;VLM token compression</div>
-          <div class="m2d">
-            <span class="mline">ToMe <span class="v">ICLR'23</span></span>
-            <span class="mline">FastV <span class="v">ECCV'24</span></span>
-            <span class="mline">PruMerge <span class="v">CVPR'24</span></span>
-            <span class="mline">FitPrune <span class="v">AAAI'25</span></span>
-            <span class="mline">VTW <span class="v">AAAI'25</span></span>
-            <span class="mline">SparseVLM <span class="v">ICML'25</span></span>
-            <span class="mline">PyramidDrop <span class="v">CVPR'25</span></span>
-            <span class="mline">VisionZip <span class="v">CVPR'25</span></span>
-            <span class="mline">FasterVLM <span class="v">CVPR'25</span></span>
-            <span class="mline">VisPruner <span class="v">ICCV'25</span></span>
-            <span class="mline more">⋯</span>
-          </div>
-        </div>
-        <span class="arrow"><i class="fas fa-arrow-right-long"></i></span>
-        <div class="vs-col">
-          <div class="vs-head accent">3DZip</div>
-          <div class="vs-sub">geometry-aware token<br>compression for 3D&nbsp;VLM</div>
-        </div>
+      <div class="m2d reveal" style="margin-top: 22px;">
+        <span class="m2d-lbl">2D&nbsp;VLM token compression</span>
+        <span class="mline">ToMe <span class="v">ICLR'23</span></span>
+        <span class="mline">FastV <span class="v">ECCV'24</span></span>
+        <span class="mline">PruMerge <span class="v">CVPR'24</span></span>
+        <span class="mline">FitPrune <span class="v">AAAI'25</span></span>
+        <span class="mline">VTW <span class="v">AAAI'25</span></span>
+        <span class="mline">SparseVLM <span class="v">ICML'25</span></span>
+        <span class="mline">PyramidDrop <span class="v">CVPR'25</span></span>
+        <span class="mline">VisionZip <span class="v">CVPR'25</span></span>
+        <span class="mline">FasterVLM <span class="v">CVPR'25</span></span>
+        <span class="mline">VisPruner <span class="v">ICCV'25</span></span>
+        <span class="mline more">⋯</span>
       </div>
+
+      <div class="h2 now3d reveal" style="margin-top: 30px;"><span class="g">Now at 3D!</span></div>
+      <p class="lead reveal" style="margin-top: 8px;">These methods compress tokens for 2D VLMs and ignore spatial
+        structure. 3D tokens are geometric and structured — 3DZip compresses them in a geometry-aware way for 3D&nbsp;VLM.</p>
     </div>
   </section>
 
