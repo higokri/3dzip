@@ -4,7 +4,7 @@
 
 🌐 [Project page](https://higokri.github.io/3dzip/) &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
 
-*We hope 3DZip serves as a useful base codebase for token pruning in 3D VLMs.*
+> *We hope 3DZip serves as a useful base codebase for token pruning in 3D VLMs.*
 
 ## 📰 News
 
