@@ -81,11 +81,16 @@
       background: rgba(99,102,241,0.10); color: var(--a1); font-weight: 700; font-size: 0.8rem;
       letter-spacing: 0.04em; border: 1px solid rgba(99,102,241,0.22); text-transform: uppercase;
     }
-    .hero h1 {
-      font-size: clamp(1.9rem, 4.4vw, 3.05rem); line-height: 1.12; font-weight: 800;
-      margin: 18px auto 6px; max-width: 14ch; max-width: 900px;
-    }
+    .hero h1 { margin: 16px auto 6px; max-width: 920px; }
     .hero h1 .g { background: var(--grad); -webkit-background-clip:text; background-clip:text; color: transparent; }
+    .hero h1 .name {
+      display: block; font-size: clamp(3rem, 9vw, 5.4rem); font-weight: 800; line-height: 1;
+      letter-spacing: -0.04em;
+    }
+    .hero h1 .subtitle {
+      display: block; font-size: clamp(1.2rem, 2.9vw, 1.85rem); font-weight: 700; color: var(--ink);
+      line-height: 1.22; margin-top: 12px;
+    }
     .authors { font-size: 1.12rem; font-weight: 600; margin-top: 16px; }
     .authors a { color: var(--ink); }
     .authors a:hover { color: var(--a1); text-decoration: none; }
@@ -169,6 +174,8 @@
     table.rt tr.full td { font-weight:700; }
     table.rt tbody tr:not(.grp) td { border-top: 1px solid #f1f2f8; }
     table.rt tr.ours td { background: rgba(168,85,247,0.12); font-weight:800; color: var(--ink); }
+    table.rt .yes { color: #16a34a; font-weight: 800; }
+    table.rt .no { color: #c2c7d6; font-weight: 700; }
     .tbl-note { color: var(--ink-soft); font-size:0.9rem; margin-top:16px; text-align:center; }
 
     /* lightbox */
@@ -207,7 +214,10 @@
   <header class="hero" id="top">
     <div class="wrap">
       <span class="badge"><i class="fas fa-star"></i> ECCV 2026</span>
-      <h1>3DZip: Spatial-Aware Feature Diversity-Guided <span class="g">Token Compression</span> for 3D Question Answering</h1>
+      <h1>
+        <span class="name g">3DZip</span>
+        <span class="subtitle">Spatial-Aware Feature Diversity-Guided Token Compression for 3D Question Answering</span>
+      </h1>
 
       <div class="authors">
         <a href="https://sites.google.com/view/changwoobaek00/%ED%99%88" target="_blank">Changwoo Baek</a> &nbsp;&nbsp;
@@ -354,12 +364,48 @@
     <div class="wrap">
       <div class="eyebrow reveal">Results</div>
       <div class="h2 reveal">State-of-the-art under every token budget</div>
-      <figure class="fig narrow reveal">
-        <div class="frame"><img src="static/images/main-results.png" alt="Main results on 3D question answering benchmarks"></div>
-        <figcaption><b>Main results on three 3D question answering benchmarks</b> (ScanQA, SQA3D, OpenEQA). Under
-          matched token budgets (128 / 64 / 32), 3DZip consistently outperforms prior 2D token compression methods.
-          With only <b>128</b> tokens, 3DZip retains <b>94.7%</b> of the full-token (1410) performance.</figcaption>
-      </figure>
+      <p class="lead reveal" style="margin-top:8px;">On <b>LLaVA-3D</b>, 3DZip beats every baseline on ScanQA, SQA3D and
+        OpenEQA — keeping <b>94.7%</b> of full performance with only <b>128</b> of 1410 tokens.</p>
+
+      <div class="tbl-card reveal" style="margin-top: 30px;">
+        <p class="cap"><span class="dot"></span> LLaVA-3D <span style="color:var(--ink-soft);font-weight:500;font-size:.85rem;">(ICCV'25)</span></p>
+        <table class="rt">
+          <thead><tr><th>Method</th><th>3D-Aware</th><th>ScanQA</th><th>SQA3D</th><th>OpenEQA</th><th>Rel.</th></tr></thead>
+          <tbody>
+            <tr class="grp"><td colspan="6">All 1410 Tokens</td></tr>
+            <tr class="full"><td>LLaVA-3D</td><td><span class="yes">✓</span></td><td>26.5</td><td>55.7</td><td>60.3</td><td>100.0%</td></tr>
+
+            <tr class="grp"><td colspan="6">Retain 128 Tokens</td></tr>
+            <tr><td>FastV</td><td><span class="no">✗</span></td><td>21.9</td><td>50.9</td><td>56.0</td><td>88.9%</td></tr>
+            <tr><td>SparseVLM</td><td><span class="no">✗</span></td><td>21.8</td><td>50.3</td><td>53.9</td><td>87.3%</td></tr>
+            <tr><td>VisionZip</td><td><span class="no">✗</span></td><td>22.2</td><td>51.5</td><td>56.2</td><td>89.8%</td></tr>
+            <tr><td>VisPruner</td><td><span class="no">✗</span></td><td>22.3</td><td>52.0</td><td>55.8</td><td>90.0%</td></tr>
+            <tr><td>Voxelization</td><td><span class="yes">✓</span></td><td>23.6</td><td>51.5</td><td>54.6</td><td>90.7%</td></tr>
+            <tr><td>DTC</td><td><span class="yes">✓</span></td><td>22.1</td><td>51.3</td><td>54.8</td><td>88.8%</td></tr>
+            <tr class="ours"><td>3DZip (Ours)</td><td><span class="yes">✓</span></td><td>24.2</td><td>53.2</td><td>58.6</td><td>94.7%</td></tr>
+
+            <tr class="grp"><td colspan="6">Retain 64 Tokens</td></tr>
+            <tr><td>FastV</td><td><span class="no">✗</span></td><td>21.1</td><td>49.5</td><td>53.8</td><td>85.9%</td></tr>
+            <tr><td>SparseVLM</td><td><span class="no">✗</span></td><td>20.9</td><td>49.8</td><td>53.6</td><td>85.7%</td></tr>
+            <tr><td>VisionZip</td><td><span class="no">✗</span></td><td>20.0</td><td>49.1</td><td>53.4</td><td>84.1%</td></tr>
+            <tr><td>VisPruner</td><td><span class="no">✗</span></td><td>21.9</td><td>50.1</td><td>53.9</td><td>87.3%</td></tr>
+            <tr><td>Voxelization</td><td><span class="yes">✓</span></td><td>21.9</td><td>49.8</td><td>54.6</td><td>87.5%</td></tr>
+            <tr><td>DTC</td><td><span class="yes">✓</span></td><td>21.3</td><td>50.2</td><td>54.3</td><td>86.8%</td></tr>
+            <tr class="ours"><td>3DZip (Ours)</td><td><span class="yes">✓</span></td><td>23.3</td><td>52.8</td><td>56.7</td><td>92.6%</td></tr>
+
+            <tr class="grp"><td colspan="6">Retain 32 Tokens</td></tr>
+            <tr><td>FastV</td><td><span class="no">✗</span></td><td>19.9</td><td>47.7</td><td>52.5</td><td>82.6%</td></tr>
+            <tr><td>SparseVLM</td><td><span class="no">✗</span></td><td>20.4</td><td>48.7</td><td>52.2</td><td>83.7%</td></tr>
+            <tr><td>VisionZip</td><td><span class="no">✗</span></td><td>19.6</td><td>47.0</td><td>52.0</td><td>81.5%</td></tr>
+            <tr><td>VisPruner</td><td><span class="no">✗</span></td><td>20.9</td><td>49.1</td><td>53.5</td><td>85.2%</td></tr>
+            <tr><td>Voxelization</td><td><span class="yes">✓</span></td><td>20.7</td><td>47.9</td><td>53.4</td><td>84.2%</td></tr>
+            <tr><td>DTC</td><td><span class="yes">✓</span></td><td>20.6</td><td>48.8</td><td>52.6</td><td>84.2%</td></tr>
+            <tr class="ours"><td>3DZip (Ours)</td><td><span class="yes">✓</span></td><td>21.9</td><td>51.1</td><td>55.7</td><td>88.9%</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="tbl-note reveal"><b>Comparison of token compression methods on LLaVA-3D.</b> The 3D-Aware column
+        indicates whether spatial geometry is explicitly used during token selection. Best per block in bold.</p>
     </div>
   </section>
 
