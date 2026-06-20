@@ -158,11 +158,12 @@
     .chip.now small { color: rgba(255,255,255,0.75); }
     .shift .arrow { font-size: 1.5rem; color: var(--a1); }
     .band .h2 .g { background: none; -webkit-text-fill-color: #7c3aed; color: #7c3aed; }
-    .m2d { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 9px; justify-content: center; align-items: center; }
-    .m2d-lbl { color: var(--ink-soft); font-size: 0.85rem; font-weight: 700; margin-right: 2px; }
-    .mtag { background: #fff; border: 1px solid var(--line); border-radius: 999px; padding: 6px 13px;
-      font-size: 0.84rem; font-weight: 700; color: var(--ink); box-shadow: var(--shadow); }
-    .mtag .v { color: var(--ink-soft); font-weight: 500; font-size: 0.75rem; margin-left: 5px; }
+    .m2d { margin-top: 20px; display: flex; flex-direction: column; gap: 3px; align-items: center; }
+    .m2d-lbl { color: #aab0c0; font-size: 0.74rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; margin-bottom: 6px; }
+    .mline { color: #9aa0b2; font-size: 0.96rem; font-weight: 500; }
+    .mline .v { color: #c0c5d3; font-size: 0.78rem; margin-left: 5px; }
+    .mline.more { color: #c6cad8; font-size: 1.3rem; letter-spacing: 3px; line-height: 1; margin-top: 2px; }
     @media (max-width: 560px){ .shift .arrow { transform: rotate(90deg); } }
 
     /* figures */
@@ -308,11 +309,12 @@
         <span class="chip now">3D&nbsp;VLM compression ✓<small>geometry-aware, with 3DZip</small></span>
       </div>
       <div class="m2d reveal">
-        <span class="m2d-lbl">Built for 2D VLMs:</span>
-        <span class="mtag">FastV <span class="v">ECCV'24</span></span>
-        <span class="mtag">SparseVLM <span class="v">ICML'25</span></span>
-        <span class="mtag">VisionZip <span class="v">CVPR'25</span></span>
-        <span class="mtag">VisPruner <span class="v">ICCV'25</span></span>
+        <span class="m2d-lbl">Built for 2D VLMs</span>
+        <span class="mline">FastV <span class="v">ECCV'24</span></span>
+        <span class="mline">SparseVLM <span class="v">ICML'25</span></span>
+        <span class="mline">VisionZip <span class="v">CVPR'25</span></span>
+        <span class="mline">VisPruner <span class="v">ICCV'25</span></span>
+        <span class="mline more">⋯</span>
       </div>
       <div class="h2 reveal" style="margin-top: 24px;">Token compression was built for 2D.<br><span class="g">Now at 3D!</span></div>
       <p class="lead reveal" style="margin-top: 6px;">These methods compress tokens for 2D VLMs and ignore spatial
