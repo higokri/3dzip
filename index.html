@@ -84,8 +84,8 @@
     .hero h1 { margin: 16px auto 6px; max-width: 920px; }
     .hero h1 .g { background: var(--grad); -webkit-background-clip:text; background-clip:text; color: transparent; }
     .hero h1 .name {
-      display: block; font-size: clamp(3rem, 9vw, 5.4rem); font-weight: 800; line-height: 1;
-      letter-spacing: -0.04em;
+      display: block; font-size: clamp(2.3rem, 6vw, 3.6rem); font-weight: 800; line-height: 1;
+      letter-spacing: -0.03em;
     }
     .hero h1 .subtitle {
       display: block; font-size: clamp(1.2rem, 2.9vw, 1.85rem); font-weight: 700; color: var(--ink);
@@ -154,7 +154,7 @@
     figure.fig .frame:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); }
     figure.fig img { width: 100%; display: block; }
     figure.fig.narrow .frame { max-width: 780px; margin: 0 auto; }
-    figcaption { color: var(--ink-soft); font-size: 0.92rem; margin-top: 14px; text-align: justify; }
+    figcaption { color: var(--ink-soft); font-size: 1.02rem; line-height: 1.6; margin-top: 14px; text-align: justify; }
     figcaption b { color: var(--ink); }
 
     /* result tables */
@@ -176,7 +176,7 @@
     table.rt tr.ours td { background: rgba(168,85,247,0.12); font-weight:800; color: var(--ink); }
     table.rt .yes { color: #16a34a; font-weight: 800; }
     table.rt .no { color: #c2c7d6; font-weight: 700; }
-    .tbl-note { color: var(--ink-soft); font-size:0.9rem; margin-top:16px; text-align:center; }
+    .tbl-note { color: var(--ink-soft); font-size:1.0rem; line-height:1.6; margin-top:16px; text-align:center; }
 
     /* lightbox */
     #lb { position: fixed; inset: 0; background: rgba(12,12,20,0.86); display: none; place-items: center; z-index: 100; padding: 30px; cursor: zoom-out; }
@@ -236,7 +236,7 @@
       <div class="hint">arXiv coming soon</div>
 
       <div class="teaser reveal">
-        <video id="teaser-video" muted playsinline poster="static/images/pipeline.png">
+        <video id="teaser-video" muted playsinline>
           <source src="static/videos/teaser.mp4" type="video/mp4">
         </video>
       </div>
