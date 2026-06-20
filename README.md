@@ -15,6 +15,8 @@ https://github.com/user-attachments/assets/5776e4df-a16b-47c9-ad09-e0f909ecd2c8
 
 ---
 
+> 💡 **We hope 3DZip can serve as a useful and reproducible base codebase that many researchers can build on for token pruning / compression in 3D VLMs.**
+
 3DZip is a **training-free**, three-stage token compression framework for projection-based 3D vision-language models.
 It removes the redundancy introduced by multi-view aggregation while preserving geometric coherence, retaining
 **94.7%** of the original performance with only **128** tokens and a **1.92× faster** inference speed.
