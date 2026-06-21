@@ -2,7 +2,7 @@
 
 **[Changwoo Baek](https://sites.google.com/view/changwoobaek00/%ED%99%88), [Kyeongbo Kong](https://www.pnu-cvsp.com/prof)†** 
 
-🌐 [Project page](https://higokri.github.io/3dzip/) &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
+🌐 [Project page](https://paper.pnu-cvsp.com/3DZip/) &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
 
 > *We hope 3DZip serves as a useful base codebase for token pruning in 3D VLMs.*
 
@@ -111,7 +111,7 @@ bash scripts/eval/eval_scanqa.sh  <pooling> <voxel_size> <target_tokens>   # Sca
 
 ```
 .
-├── index.html              # Project page (served at higokri.github.io/3dzip)
+├── index.html              # Project page (served at paper.pnu-cvsp.com/3DZip)
 ├── static/                 # Project-page assets (figures, teaser video)
 ├── llava/                  # LLaVA-3D + 3DZip implementation
 │   └── model/multimodal_encoder/video_encoder.py   # core 3DZip algorithm
