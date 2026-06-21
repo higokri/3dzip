@@ -20,18 +20,28 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet"
     href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Noto+Sans:wght@400;500;700&display=swap"
-    rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
 
   <style>
-    :root { --accent: #1f6feb; }
-    body { font-family: 'Noto Sans', sans-serif; }
+    :root { --accent: #003262; }
+    html { scroll-behavior: smooth; scroll-padding-top: 3.6rem; }
+    body { font-family: 'Noto Sans', sans-serif; padding-top: 2.8rem; }
     .hero-title { font-family: 'Google Sans', 'Noto Sans', sans-serif; }
     .author-block { display: inline-block; margin: 0 0.6rem; }
-    .author-block a { color: var(--accent); }
-    .conference { color: #d33682; font-weight: 700; letter-spacing: 0.02em; }
+    .author-block a { color: hsl(204, 86%, 53%); }
+    .conference { color: #003262; font-weight: 700; letter-spacing: 0.02em; }
+
+    /* top nav (svg-project style) */
+    .top-nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 999; background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid rgba(0,0,0,0.12);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08); padding: 0.6rem 0; display: flex; align-items: center; justify-content: stretch; }
+    .top-nav a { flex: 1; color: #555; font-weight: 500; font-size: 1.1rem; text-decoration: none; display: flex;
+      align-items: center; justify-content: center; gap: 0.4rem; padding: 0.3rem 0; transition: color 0.2s, background 0.2s;
+      white-space: nowrap; border-right: 1px solid rgba(0,0,0,0.1); }
+    .top-nav a:last-child { border-right: none; }
+    .top-nav a:hover { color: #003262; background: rgba(0,50,98,0.05); }
+    .top-nav a.active { color: #003262; font-weight: 700; background: rgba(0,50,98,0.06); }
+    @media screen and (max-width: 768px) { .top-nav a { font-size: 0.78rem; gap: 0.2rem; } }
     .link-block .button { margin: 0.25rem; }
     .link-block .button[disabled] { opacity: 0.55; cursor: not-allowed; pointer-events: none; }
     .section-figure img { border-radius: 6px; }
@@ -76,8 +86,19 @@
 
 <body>
 
+  <!-- ===================== TOP NAV ===================== -->
+  <nav class="top-nav">
+    <a href="#top" class="active"><i class="fas fa-home"></i> 3DZip</a>
+    <a href="#abstract">Abstract</a>
+    <a href="#method">Method</a>
+    <a href="#results">Results</a>
+    <a href="#generalization">Generalization</a>
+    <a href="#qualitative">Qualitative</a>
+    <a href="https://github.com/higokri/3dzip" target="_blank"><i class="fab fa-github"></i> Code</a>
+  </nav>
+
   <!-- ===================== HERO ===================== -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="hero-body">
       <div class="container is-max-desktop has-text-centered">
         <h1 class="title is-1 hero-title publication-title">
@@ -132,7 +153,7 @@
   </section>
 
   <!-- ===================== ABSTRACT ===================== -->
-  <section class="section">
+  <section class="section" id="abstract">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
@@ -179,7 +200,7 @@
   </section>
 
   <!-- ===================== METHOD ===================== -->
-  <section class="section">
+  <section class="section" id="method">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-full">
@@ -232,7 +253,7 @@
   </section>
 
   <!-- ===================== RESULTS ===================== -->
-  <section class="section">
+  <section class="section" id="results">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-full">
@@ -252,7 +273,7 @@
   </section>
 
   <!-- ===================== GENERALIZATION ===================== -->
-  <section class="section" style="background-color: #fafafa;">
+  <section class="section" style="background-color: #fafafa;" id="generalization">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-full">
@@ -323,7 +344,7 @@
   </section>
 
   <!-- ===================== QUALITATIVE (slider) ===================== -->
-  <section class="section">
+  <section class="section" id="qualitative">
     <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-full">
