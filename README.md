@@ -11,6 +11,12 @@
 - **2026-06-20** — 🚀 Code & project page released!
 - **2026-06-18** — 🎉 3DZip is accepted to **ECCV 2026**!
 
+## 🗺️ Release Plan
+
+- [x] Inference & evaluation code (LLaVA-3D)
+- [ ] **3DZip+** — extended version
+- [ ] Paper (arXiv)
+
 ## ✨ Highlight
 
 https://github.com/user-attachments/assets/5776e4df-a16b-47c9-ad09-e0f909ecd2c8
