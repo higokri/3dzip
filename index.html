@@ -282,61 +282,9 @@
             3DZip is applied after 3D token construction without modifying the backbone, and consistently outperforms
             all baselines on <b>Video-3D-LLM</b> and <b>SR-3D</b> under every token budget.
           </p>
-          <div class="columns" style="margin-top: 18px;">
-            <div class="column">
-              <div class="tbl-box">
-                <p class="tbl-cap">Video-3D-LLM <span style="color:#888;font-weight:500;font-size:.85rem;">(CVPR'25)</span></p>
-                <table class="rt">
-                  <thead><tr><th>Method</th><th>ScanQA</th><th>SQA3D</th><th>OpenEQA</th></tr></thead>
-                  <tbody>
-                    <tr class="grp"><td colspan="4">All 3920 Tokens</td></tr>
-                    <tr class="full"><td>Video-3D-LLM</td><td>29.9</td><td>58.4</td><td>59.4</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 128 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>23.6</td><td>51.2</td><td>53.5</td></tr>
-                    <tr><td>Voxelization</td><td>24.6</td><td>52.2</td><td>52.9</td></tr>
-                    <tr><td>DTC</td><td>23.7</td><td>51.9</td><td>53.5</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>24.7</td><td>53.1</td><td>54.6</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 64 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>22.3</td><td>49.2</td><td>51.4</td></tr>
-                    <tr><td>Voxelization</td><td>22.7</td><td>50.0</td><td>51.9</td></tr>
-                    <tr><td>DTC</td><td>22.5</td><td>49.2</td><td>52.0</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>23.8</td><td>52.2</td><td>54.6</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 32 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>21.0</td><td>48.4</td><td>50.2</td></tr>
-                    <tr><td>Voxelization</td><td>20.9</td><td>48.3</td><td>50.3</td></tr>
-                    <tr><td>DTC</td><td>20.8</td><td>49.0</td><td>50.0</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>23.3</td><td>51.8</td><td>53.0</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-            <div class="column">
-              <div class="tbl-box">
-                <p class="tbl-cap">SR-3D <span style="color:#888;font-weight:500;font-size:.85rem;">(ICLR'26)</span></p>
-                <table class="rt">
-                  <thead><tr><th>Method</th><th>ScanQA</th><th>SQA3D</th><th>OpenEQA</th></tr></thead>
-                  <tbody>
-                    <tr class="grp"><td colspan="4">All 2420 Tokens</td></tr>
-                    <tr class="full"><td>SR-3D</td><td>29.6</td><td>61.0</td><td>61.7</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 128 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>23.0</td><td>51.5</td><td>54.3</td></tr>
-                    <tr><td>Voxelization</td><td>22.8</td><td>51.1</td><td>52.2</td></tr>
-                    <tr><td>DTC</td><td>23.5</td><td>51.4</td><td>53.5</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>24.2</td><td>53.2</td><td>54.5</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 64 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>21.9</td><td>50.3</td><td>52.0</td></tr>
-                    <tr><td>Voxelization</td><td>21.1</td><td>48.8</td><td>49.6</td></tr>
-                    <tr><td>DTC</td><td>21.1</td><td>49.6</td><td>52.0</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>23.1</td><td>51.9</td><td>52.6</td></tr>
-                    <tr class="grp"><td colspan="4">Retain 32 Tokens</td></tr>
-                    <tr><td>VisPruner</td><td>20.1</td><td>49.1</td><td>51.5</td></tr>
-                    <tr><td>Voxelization</td><td>19.9</td><td>47.9</td><td>50.3</td></tr>
-                    <tr><td>DTC</td><td>19.7</td><td>48.1</td><td>51.4</td></tr>
-                    <tr class="ours"><td>3DZip (Ours)</td><td>21.5</td><td>49.6</td><td>51.7</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+          <div class="section-figure" style="margin-top: 18px;">
+            <img src="static/images/generalization.png" alt="Generalization across 3D VLMs: Video-3D-LLM and SR-3D"
+              style="max-width:900px; width:100%;">
           </div>
         </div>
       </div>
