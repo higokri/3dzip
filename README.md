@@ -4,8 +4,6 @@
 
 🌐 [Project page](https://paper.pnu-cvsp.com/3DZip/) &nbsp;·&nbsp; 📄 arXiv: *coming soon* 
 
-> *We hope 3DZip serves as a useful base codebase for token pruning in 3D VLMs.*
-
 ## 📰 News
 
 - **2026-06-20** — 🚀 Code & project page released!
